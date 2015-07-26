@@ -1,0 +1,109 @@
+% Funny bug http://tex.stackexchange.com/questions/232168/normal-text-is-invisible-when-using-beamer-with-notes-and-xelatex
+\def\pgfsysdriver{pgfsys-dvipdfm.def}
+\documentclass{beamer}
+\title{Git Workshop}
+\author{Peter Lundgren}
+
+\usepackage{pgfpages}
+\usepackage{ifthen}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+\usepgfplotslibrary{dateplot}
+\usepackage{adjustbox}
+\usepackage{minibox}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+\usepackage{gitdags}
+\usepackage{xcolor-solarized}
+\usepackage{tikz}
+\usetikzlibrary{fit,arrows,shadows}
+\usepackage{hyperref}
+
+\makeatletter
+% Courtesy of Section 102.5.3 of the Tikz & PGF Manual
+\pgfdeclareshape{document}{
+    \inheritsavedanchors[from=rectangle] % this is nearly a rectangle
+    \inheritanchorborder[from=rectangle]
+    \inheritanchor[from=rectangle]{center}
+    \inheritanchor[from=rectangle]{north}
+    \inheritanchor[from=rectangle]{south}
+    \inheritanchor[from=rectangle]{west}
+    \inheritanchor[from=rectangle]{east}
+    % ... and possibly more
+    \backgroundpath{% this is new
+        % store lower right in xa/ya and upper right in xb/yb
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        % compute corner of ‘‘flipped page’’
+        \pgf@xc=\pgf@xb \advance\pgf@xc by-7.5pt % this should be a parameter
+        \pgf@yc=\pgf@yb \advance\pgf@yc by-7.5pt
+        % construct main path
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+        \pgfpathclose
+        % add little corner
+        \pgfpathmoveto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+        \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    }
+}
+\makeatother
+
+\newcommand{\chapquote}[2]{
+    \begin{quotation} {\itshape#1} \end{quotation}
+    \begin{flushright} - #2 \end{flushright}
+}
+
+\AtBeginSection[]{
+    \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+    \end{frame}
+}
+
+\setbeamercolor{normal text}{fg=black}
+\setbeamercolor{structure}{fg=solarized-blue,bg=solarized-base2!50}
+\setbeamercolor{alerted text}{fg=solarized-orange}
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamercolor{background canvas}{bg=solarized-base3!40}
+\setbeamertemplate{background}{
+    \tikz[overlay,remember picture]
+    \node[at=(current page.south east),anchor=south east,inner sep=0pt] {
+    \includegraphics[width=6em]{Git-Icon-base3.png}};
+}
+\setbeameroption{show notes on second screen=right}
+\setbeamertemplate{note page}[plain]
+
+\begin{document}
+    \begin{frame}
+        \titlepage
+    \end{frame}
+    \note[itemize]{
+        \item Introductions
+        \item We've got a lot to talk about today
+        \item We've also got a lot of time
+        \item Ask questions
+        \item Tell me if I'm going too fast
+    }
+
+    \begin{frame}
+        \frametitle{More Information}
+        \centering
+        This presentation is avaliable at
+        \url{https://github.com/peterlundgren/git-workshop}
+
+        \bigskip
+        Download Git at
+        \url{https://git-scm.com}
+
+        \bigskip
+        Learn more about Git at
+        \url{https://progit.org}
+    \end{frame}
+
+    \include{01-what-is-git}
+\end{document}

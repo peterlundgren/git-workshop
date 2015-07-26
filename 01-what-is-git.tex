@@ -1,0 +1,397 @@
+\section[Section]{What is Git?}
+
+\tikzset{
+    box/.style={
+        draw=solarized-base01,
+        fill=solarized-base3!50,
+        %thick,
+        drop shadow={
+            opacity=0.15,
+        },
+    },
+    box2/.style={
+        draw=solarized-base01,
+        fill=solarized-base2!50,
+        %thick,
+        drop shadow={
+            opacity=0.15,
+        },
+    },
+    arrow/.style={
+        %semithick,
+        Latex-,
+        draw=gray,
+    },
+    file/.style={
+        shape=document,
+        minimum height=4em,
+        minimum width=3em,
+        draw=solarized-base01,
+        fill=solarized-blue!20,
+        %thick,
+        drop shadow={
+            opacity=0.15,
+        },
+        font=\fontfamily{lmtt}\selectfont\small,
+    },
+    version/.style={
+        shape=rounded rectangle,
+        rounded rectangle arc length=90,
+        minimum height=1.6em,
+        minimum width=2em,
+        draw=solarized-base01,
+        fill=solarized-green!20,
+        %very thick,
+        drop shadow={
+            opacity=0.15,
+        },
+        font=\fontfamily{lmtt}\selectfont\small,
+    },
+}
+
+\newsavebox{\versiondatabase}
+\savebox{\versiondatabase}{%
+    \begin{tikzpicture}[node distance=1em]
+        \pgfdeclarelayer{background}
+        \pgfsetlayers{background,main}
+        \node (vdb) [] {Version Database};
+        \node (v3) [below=of vdb, version] {Version 3};
+        \node (v2) [below=of v3, version] {Version 2};
+        \node (v1) [below=of v2, version] {Version 1};
+        \draw [arrow] (v2) -- (v3);
+        \draw [arrow] (v1) -- (v2);
+        \begin{pgfonlayer}{background}
+            \node (vdbbox) [fit=(vdb)(v3)(v2)(v1),box2] {};
+        \end{pgfonlayer}
+    \end{tikzpicture}%
+}
+
+\newsavebox{\files}
+\savebox{\files}{%
+    \begin{tikzpicture}[]
+        \foreach \i in {1,2,3} {
+            \begin{scope}[shift={(.1*\i,.1*\i)}]
+                \node () [file] {Files};
+            \end{scope}
+        }
+    \end{tikzpicture}%
+}
+
+\begin{frame}
+    \frametitle{What is Git?}
+    \centering
+    \minibox{
+        git \textit{noun} \textbackslash'git\textbackslash\\
+        \textit{British}\\
+        \qquad : a foolish or worthless person
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{What is Git?}
+    \chapquote{``I'm an egotistical bastard, and I name all my projects after
+               myself. First 'Linux', now 'Git'"}{Linux Torvalds}
+\end{frame}
+
+\begin{frame}
+    \frametitle{What is Git?}
+    Random three-letter combination that is pronounceable, and not actually
+    used by any common UNIX command. The fact that it is a mispronunciation of
+    "get" may or may not be relevant.
+\end{frame}
+
+\begin{frame}
+    \frametitle{What is Git?}
+    \centering
+    Git is an open source,\\
+    distributed version control system\\
+    designed for speed and efficiency
+\end{frame}
+\note{Official tagline of Git}
+
+\begin{frame}
+    \frametitle{What is Git?}
+    \centering
+    Git is an \alert{open source},\\
+    distributed version control system\\
+    designed for speed and efficiency
+\end{frame}
+\note[itemize]{
+    \item LGPL-2.1
+    \item https://github.com/git/git
+    \item First release was 7 April 2005 from Linus Torvalds
+    \item Maintained by Junio Hamano since since 26 July 2005
+    \item Kernel hacker mentality. It was written to manage the Linux
+          kernel. So, it won't stop you from shooting yourself in the foot.
+}
+
+\begin{frame}
+    \frametitle{What is Git?}
+    \centering
+    Git is an open source,\\
+    \alert{distributed} version control system\\
+    designed for speed and efficiency
+\end{frame}
+
+\begin{frame}
+    \frametitle{Centralized Version Control}
+    \centering
+    \begin{tikzpicture}[node distance=1em]
+        \pgfdeclarelayer{background}
+        \pgfsetlayers{background,main}
+        \node (server) [] {Server};
+        \node (vdbbox) [below=of server,inner sep=0] {\usebox{\versiondatabase}};
+        \node (client1) [] at (-4,-2) {Client A};
+        \node (files1) [below=of client1,inner sep=0] {\usebox{\files}};
+        \node (client2) [] at (4,-2) {Client B};
+        \node (files2) [below=of client2,inner sep=0] {\usebox{\files}};
+        \begin{pgfonlayer}{background}
+            \node [fit=(server)(vdbbox),box] {};
+            \node [fit=(client1)(files1),box] {};
+            \node [fit=(client2)(files2),box] {};
+        \end{pgfonlayer}
+        \draw [arrow] (vdbbox) -- (files1);
+        \draw [arrow] (files1) -- (vdbbox);
+        \draw [arrow] (vdbbox) -- (files2);
+        \draw [arrow] (files2) -- (vdbbox);
+    \end{tikzpicture}
+\end{frame}
+\note[itemize]{
+    \item Client, server model
+    \item Version database on only one server
+    \item Download a snapshot
+    \item Send incremental changes to the server
+    \item Division of responsibility; some things only server can do, some
+          things only client can do.
+}
+
+\begin{frame}
+    \frametitle{Distributed Version Control}
+    \begin{adjustbox}{max totalsize={\textwidth}{\textheight},center}
+        \begin{tikzpicture}[node distance=1.4em]
+            \pgfdeclarelayer{background}
+            \pgfsetlayers{background,main}
+            \node (server) [] {Server};
+            \node (vdbbox) [below=of server,inner sep=0] {\usebox{\versiondatabase}};
+            \node (client1) [] at (-4,0) {Client A};
+            \node (files1) [below=of client1,inner sep=0] {\usebox{\files}};
+            \node (vdbbox1) [below=of files1,inner sep=0] {\usebox{\versiondatabase}};
+            \node (client2) [] at (4,0) {Client B};
+            \node (files2) [below=of client2,inner sep=0] {\usebox{\files}};
+            \node (vdbbox2) [below=of files2,inner sep=0] {\usebox{\versiondatabase}};
+            \begin{pgfonlayer}{background}
+                \node [fit=(server)(vdbbox),box] {};
+                \node [fit=(client1)(files1)(vdbbox1),box] {};
+                \node [fit=(client2)(files2)(vdbbox2),box] {};
+            \end{pgfonlayer}
+            \draw [arrow] (vdbbox) -- (vdbbox1);
+            \draw [arrow] (vdbbox1) -- (vdbbox);
+            \draw [arrow] (files1) -- (vdbbox1);
+            \draw [arrow] (vdbbox1) -- (files1);
+            \draw [arrow] (vdbbox) -- (vdbbox2);
+            \draw [arrow] (vdbbox2) -- (vdbbox);
+            \draw [arrow] (files2) -- (vdbbox2);
+            \draw [arrow] (vdbbox2) -- (files2);
+            \draw [arrow] ([yshift=-3em] vdbbox1.east) -- ([yshift=-3em] vdbbox2.west);
+            \draw [arrow] ([yshift=-3em] vdbbox2.west) -- ([yshift=-3em] vdbbox1.east);
+        \end{tikzpicture}
+    \end{adjustbox}
+\end{frame}
+\note[itemize]{
+    \item Peer to peer
+    \item Version database on every machine
+    \item Clients can talk to each other
+    \item Download the entire repository
+    \item Operate locally, share explicitely
+    \item You can have a central server
+    \item Servers are only different in that, as an optimization, they
+          don't have working copies of the files. The clients are actually
+          more featureful than the server.
+}
+
+\begin{frame}
+    \frametitle{What is Git?}
+    \centering
+    Git is an open source,\\
+    distributed version control system\\
+    designed for \alert{speed and efficiency}
+\end{frame}
+
+\newcommand{\gitsvnplot}[4]{%
+    \begin{tikzpicture}[baseline]
+        \ifthenelse{\equal{#1}{true}}{
+            \begin{axis}[
+                ybar=0,
+                bar width=1.2cm,
+                x=1.2cm,
+                enlarge x limits={abs=0.1cm},
+                ymin=0,
+                symbolic x coords={#2},
+                xtick=data,
+                yticklabels={,,},
+                tick style={draw=none},
+                axis x line*=bottom,
+                xticklabel style={
+                    font=\small,
+                },
+                legend style={
+                    %at={(1.5,1)},
+                    fill=solarized-base3!40,
+                    %draw=none,
+                    draw=solarized-base01,
+                },
+                legend columns=-1,
+                legend to name=foobar,
+                legend entries={Git,Subversion},
+                nodes near coords,
+                nodes near coords={\pgfmathprintnumber[fixed,precision=2,zerofill=true]{\pgfplotspointmeta}},
+                axis line style={solarized-base01},
+                axis y line*=left,
+                ylabel={Seconds},
+                ylabel near ticks,
+            ]
+        }{
+            \begin{axis}[
+                ybar=0,
+                bar width=1.2cm,
+                x=1.2cm,
+                enlarge x limits={abs=0.1cm},
+                ymin=0,
+                symbolic x coords={#2},
+                xtick=data,
+                yticklabels={,,},
+                tick style={draw=none},
+                axis x line*=bottom,
+                xticklabel style={
+                    font=\small,
+                },
+                legend style={
+                    %at={(1.5,1)},
+                    fill=solarized-base3!40,
+                    %draw=none,
+                    draw=solarized-base01,
+                },
+                legend columns=-1,
+                legend to name=foobar,
+                legend entries={Git,Subversion},
+                nodes near coords,
+                nodes near coords={\pgfmathprintnumber[fixed,precision=2,zerofill=true]{\pgfplotspointmeta}},
+                scaled y ticks=false,
+                axis line style={solarized-base01},
+                hide y axis,
+            ]
+        }
+            \addplot[solarized-orange,fill=solarized-orange!20] coordinates {(#2,#3)};
+            \addplot[solarized-blue,fill=solarized-blue!20] coordinates {(#2,#4)};
+        \end{axis}
+    \end{tikzpicture}%
+}
+\begin{frame}
+    \frametitle{Git is Fast}
+    \begin{adjustbox}{max totalsize={\textwidth}{.8\textheight},center}
+        \begin{tabular}{llllll}
+            \gitsvnplot{true}{Commit Files}{0.64}{2.60} &
+            \gitsvnplot{false}{Commit Images}{1.53}{24.70} &
+            \gitsvnplot{false}{Diff Current}{0.25}{1.09} &
+            \gitsvnplot{false}{Diff Recent}{0.25}{3.99} &
+            \gitsvnplot{false}{Diff Tags}{1.17}{83.57} &
+            \gitsvnplot{false}{Clone}{107.5}{14.0} \\
+            \gitsvnplot{true}{Log (50)}{0.01}{0.38} &
+            \gitsvnplot{false}{Log (All)}{0.52}{169.20} &
+            \gitsvnplot{false}{Log (File)}{0.60}{82.84} &
+            \gitsvnplot{false}{Update}{0.90}{2.82} &
+            \gitsvnplot{false}{Blame}{1.91}{3.04} &
+            \gitsvnplot{false}{Size}{181.0}{132.0} \\
+            \multicolumn{6}{r}{\ref{foobar}} \\
+        \end{tabular}
+    \end{adjustbox}
+\end{frame}
+\note[itemize]{
+    \item Data from Scott Chacon http://git-scm.com/about/small-and-fast
+    \item All operations are local except explicit synchronization
+    \item No network access needed to:
+    \begin{itemize}
+        \item Perform a diff
+        \item View file history
+        \item Commit changes
+        \item Merge branches
+        \item Switch branches
+        \item Checkout another revision
+        \item Blame a file
+        \item Search for the change that introduced a bug
+    \end{itemize}
+}
+
+\begin{frame}
+    \frametitle{What is Git?}
+    \centering
+    \alert{Immutable} \\
+    (almost) never removes data
+\end{frame}
+\note[itemize]{
+    \item You will hear about rewriting history.
+    \item How many people have heard about rewriting history in Git?
+    \item Git does not rewrite history.
+    \item What Git does, is write a new history and move a pointer to it.
+    \item Old history is still in the database.
+    \item If you delete a branch, you're not deleting the work on that branch,
+          you're deleting a pointer to it.
+    \item Git keeps a log off all of this, so you can go back and find it.
+}
+
+\begin{frame}
+    \frametitle{What is Git?}
+    \centering
+    Cryptographically \alert{secure}
+\end{frame}
+\note[itemize]{
+    \item Everything is hashed and addressed by its hash.
+    \item Change content, change how you get that content.
+    \item Sign tags and commits with PGP.
+    \item Git can detect corruption.
+}
+
+\begin{frame}
+    \frametitle{Git is Popular}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            title={Google Trends Since First Git Release},
+            date coordinates in=x,
+            xmin=2005-04-01,
+            xmax=2015-08-09,
+            ymin=0,
+            ymax=100,
+            width=\textwidth,
+            height=0.8\textheight,
+            yticklabels={,,},
+            tick style={draw=none},
+            xtick={2006-01-01,2007-01-01,2008-01-01,2009-01-01,2010-01-01,2011-01-01,2012-01-01,2013-01-01,2014-01-01,2015-01-01},
+            xticklabel=\year,
+            xticklabel style={
+                font=\scriptsize,
+            },
+            axis x line*=bottom,
+            %hide y axis,
+            axis y line*=left,
+            axis line style={solarized-base01},
+            legend style={
+                at={(0.6,1)},
+                fill=solarized-base3!40,
+                %draw=none,
+                draw=solarized-base01,
+                font=\scriptsize,
+            },
+            legend columns=-1,
+        ]
+            \addplot[solarized-orange] table [col sep=comma,x=Week,y=Git] {google-trends.csv};
+            \addplot[solarized-blue] table [col sep=comma,x=Week,y=Subversion] {google-trends.csv};
+            \addplot[solarized-violet] table [col sep=comma,x=Week,y=Perforce] {google-trends.csv};
+            \legend{Git,Subversion,Perforce}
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+\note[itemize]{
+    \item Dip every Christmas
+    \item I think the peak 2012 was due to the release of GitHub for Windows on May 21, 2012
+}

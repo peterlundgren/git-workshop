@@ -1,0 +1,6 @@
+[submodule "gitdags"]
+	path = gitdags
+	url = https://github.com/peterlundgren/gitdags.git
+[submodule "xcolor-solarized"]
+	path = xcolor-solarized
+	url = https://github.com/Jubobs/xcolor-solarized.git
