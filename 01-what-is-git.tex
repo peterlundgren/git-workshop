@@ -566,19 +566,22 @@
 \begin{frame}
     \frametitle{Git is Popular}
     \centering
+    % https://www.google.com/trends/explore?date=2005-05-01%202016-08-31&q=%2Fm%2F05vqwg,Subversion,%2Fm%2F08w6d6
+    % Download csv in 4 year chunks to get weekly data
+    % Adjust scale so that they match on overlapping weeks
     \begin{tikzpicture}
         \begin{axis}[
             title={Google Trends Since First Git Release},
             date coordinates in=x,
             xmin=2005-04-01,
-            xmax=2015-08-09,
+            xmax=2016-09-01,
             ymin=0,
-            ymax=100,
+            ymax=226,
             width=\textwidth,
             height=0.8\textheight,
             yticklabels={,,},
             tick style={draw=none},
-            xtick={2006-01-01,2007-01-01,2008-01-01,2009-01-01,2010-01-01,2011-01-01,2012-01-01,2013-01-01,2014-01-01,2015-01-01},
+            xtick={2006-01-01,2008-01-01,2010-01-01,2012-01-01,2014-01-01,2016-01-01},
             xticklabel=\year,
             xticklabel style={
                 font=\scriptsize,
@@ -605,5 +608,4 @@
 \end{frame}
 \note[itemize]{
     \item Dip every Christmas
-    \item I think the peak 2012 was due to the release of GitHub for Windows on May 21, 2012
 }
