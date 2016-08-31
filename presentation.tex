@@ -19,6 +19,13 @@
 \usetikzlibrary{fit,arrows,shadows}
 \usepackage{hyperref}
 \usepackage{multicol}
+\usepackage{graphics}
+\graphicspath{ {images/} }
+\usepackage{enumitem}
+% Don't let enumitem redefine beamer's template
+\setitemize{label=\usebeamerfont*{itemize item}%
+  \usebeamercolor[fg]{itemize item}
+  \usebeamertemplate{itemize item}}
 
 \makeatletter
 % Courtesy of Section 102.5.3 of the Tikz & PGF Manual
