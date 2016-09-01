@@ -348,25 +348,28 @@
 \begin{frame}
     \frametitle{Centralized Version Control}
     \centering
-    \begin{tikzpicture}[node distance=1em]
-        \pgfdeclarelayer{background}
-        \pgfsetlayers{background,main}
-        \node (server) [] {Server};
-        \node (vdbbox) [below=of server,inner sep=0] {\usebox{\versiondatabase}};
-        \node (client1) [] at (-4,-2) {Client A};
-        \node (files1) [below=of client1,inner sep=0] {\usebox{\files}};
-        \node (client2) [] at (4,-2) {Client B};
-        \node (files2) [below=of client2,inner sep=0] {\usebox{\files}};
-        \begin{pgfonlayer}{background}
-            \node [fit=(server)(vdbbox),box] {};
-            \node [fit=(client1)(files1),box] {};
-            \node [fit=(client2)(files2),box] {};
-        \end{pgfonlayer}
-        \draw [arrow] (vdbbox) -- (files1);
-        \draw [arrow] (files1) -- (vdbbox);
-        \draw [arrow] (vdbbox) -- (files2);
-        \draw [arrow] (files2) -- (vdbbox);
-    \end{tikzpicture}
+    \begin{figure}
+        \begin{tikzpicture}[node distance=1em]
+            \pgfdeclarelayer{background}
+            \pgfsetlayers{background,main}
+            \node (server) [] {Server};
+            \node (vdbbox) [below=of server,inner sep=0] {\usebox{\versiondatabase}};
+            \node (client1) [] at (-4,-2) {Client A};
+            \node (files1) [below=of client1,inner sep=0] {\usebox{\files}};
+            \node (client2) [] at (4,-2) {Client B};
+            \node (files2) [below=of client2,inner sep=0] {\usebox{\files}};
+            \begin{pgfonlayer}{background}
+                \node [fit=(server)(vdbbox),box] {};
+                \node [fit=(client1)(files1),box] {};
+                \node [fit=(client2)(files2),box] {};
+            \end{pgfonlayer}
+            \draw [arrow] (vdbbox) -- (files1);
+            \draw [arrow] (files1) -- (vdbbox);
+            \draw [arrow] (vdbbox) -- (files2);
+            \draw [arrow] (files2) -- (vdbbox);
+        \end{tikzpicture}
+        \caption{Centralized Version Control}
+    \end{figure}
 \end{frame}
 \note[itemize]{
     \item Client, server model
@@ -379,35 +382,38 @@
 
 \begin{frame}
     \frametitle{Distributed Version Control}
-    \begin{adjustbox}{max totalsize={\textwidth}{\textheight},center}
-        \begin{tikzpicture}[node distance=1.4em]
-            \pgfdeclarelayer{background}
-            \pgfsetlayers{background,main}
-            \node (server) [] {Server};
-            \node (vdbbox) [below=of server,inner sep=0] {\usebox{\versiondatabase}};
-            \node (client1) [] at (-4,0) {Client A};
-            \node (files1) [below=of client1,inner sep=0] {\usebox{\files}};
-            \node (vdbbox1) [below=of files1,inner sep=0] {\usebox{\versiondatabase}};
-            \node (client2) [] at (4,0) {Client B};
-            \node (files2) [below=of client2,inner sep=0] {\usebox{\files}};
-            \node (vdbbox2) [below=of files2,inner sep=0] {\usebox{\versiondatabase}};
-            \begin{pgfonlayer}{background}
-                \node [fit=(server)(vdbbox),box] {};
-                \node [fit=(client1)(files1)(vdbbox1),box] {};
-                \node [fit=(client2)(files2)(vdbbox2),box] {};
-            \end{pgfonlayer}
-            \draw [arrow] (vdbbox) -- (vdbbox1);
-            \draw [arrow] (vdbbox1) -- (vdbbox);
-            \draw [arrow] (files1) -- (vdbbox1);
-            \draw [arrow] (vdbbox1) -- (files1);
-            \draw [arrow] (vdbbox) -- (vdbbox2);
-            \draw [arrow] (vdbbox2) -- (vdbbox);
-            \draw [arrow] (files2) -- (vdbbox2);
-            \draw [arrow] (vdbbox2) -- (files2);
-            \draw [arrow] ([yshift=-3em] vdbbox1.east) -- ([yshift=-3em] vdbbox2.west);
-            \draw [arrow] ([yshift=-3em] vdbbox2.west) -- ([yshift=-3em] vdbbox1.east);
-        \end{tikzpicture}
-    \end{adjustbox}
+    \begin{figure}
+        \begin{adjustbox}{max totalsize={\textwidth}{\textheight},center}
+            \begin{tikzpicture}[node distance=1.4em]
+                \pgfdeclarelayer{background}
+                \pgfsetlayers{background,main}
+                \node (server) [] {Server};
+                \node (vdbbox) [below=of server,inner sep=0] {\usebox{\versiondatabase}};
+                \node (client1) [] at (-4,0) {Client A};
+                \node (files1) [below=of client1,inner sep=0] {\usebox{\files}};
+                \node (vdbbox1) [below=of files1,inner sep=0] {\usebox{\versiondatabase}};
+                \node (client2) [] at (4,0) {Client B};
+                \node (files2) [below=of client2,inner sep=0] {\usebox{\files}};
+                \node (vdbbox2) [below=of files2,inner sep=0] {\usebox{\versiondatabase}};
+                \begin{pgfonlayer}{background}
+                    \node [fit=(server)(vdbbox),box] {};
+                    \node [fit=(client1)(files1)(vdbbox1),box] {};
+                    \node [fit=(client2)(files2)(vdbbox2),box] {};
+                \end{pgfonlayer}
+                \draw [arrow] (vdbbox) -- (vdbbox1);
+                \draw [arrow] (vdbbox1) -- (vdbbox);
+                \draw [arrow] (files1) -- (vdbbox1);
+                \draw [arrow] (vdbbox1) -- (files1);
+                \draw [arrow] (vdbbox) -- (vdbbox2);
+                \draw [arrow] (vdbbox2) -- (vdbbox);
+                \draw [arrow] (files2) -- (vdbbox2);
+                \draw [arrow] (vdbbox2) -- (files2);
+                \draw [arrow] ([yshift=-3em] vdbbox1.east) -- ([yshift=-3em] vdbbox2.west);
+                \draw [arrow] ([yshift=-3em] vdbbox2.west) -- ([yshift=-3em] vdbbox1.east);
+            \end{tikzpicture}
+        \end{adjustbox}
+        \caption{Distributed Version Control}
+    \end{figure}
 \end{frame}
 \note[itemize]{
     \item Peer to peer
@@ -500,23 +506,26 @@
 }
 \begin{frame}
     \frametitle{Git is Fast}
-    \begin{adjustbox}{max totalsize={\textwidth}{.8\textheight},center}
-        \begin{tabular}{llllll}
-            \gitsvnplot{true}{Commit Files}{0.64}{2.60} &
-            \gitsvnplot{false}{Commit Images}{1.53}{24.70} &
-            \gitsvnplot{false}{Diff Current}{0.25}{1.09} &
-            \gitsvnplot{false}{Diff Recent}{0.25}{3.99} &
-            \gitsvnplot{false}{Diff Tags}{1.17}{83.57} &
-            \gitsvnplot{false}{Clone}{107.5}{14.0} \\
-            \gitsvnplot{true}{Log (50)}{0.01}{0.38} &
-            \gitsvnplot{false}{Log (All)}{0.52}{169.20} &
-            \gitsvnplot{false}{Log (File)}{0.60}{82.84} &
-            \gitsvnplot{false}{Update}{0.90}{2.82} &
-            \gitsvnplot{false}{Blame}{1.91}{3.04} &
-            \gitsvnplot{false}{Size}{181.0}{132.0} \\
-            \multicolumn{6}{r}{\ref{foobar}} \\
-        \end{tabular}
-    \end{adjustbox}
+    \begin{figure}
+        \begin{adjustbox}{max totalsize={\textwidth}{.75\textheight},center}
+            \begin{tabular}{llllll}
+                \gitsvnplot{true}{Commit Files}{0.64}{2.60} &
+                \gitsvnplot{false}{Commit Images}{1.53}{24.70} &
+                \gitsvnplot{false}{Diff Current}{0.25}{1.09} &
+                \gitsvnplot{false}{Diff Recent}{0.25}{3.99} &
+                \gitsvnplot{false}{Diff Tags}{1.17}{83.57} &
+                \gitsvnplot{false}{Clone}{107.5}{14.0} \\
+                \gitsvnplot{true}{Log (50)}{0.01}{0.38} &
+                \gitsvnplot{false}{Log (All)}{0.52}{169.20} &
+                \gitsvnplot{false}{Log (File)}{0.60}{82.84} &
+                \gitsvnplot{false}{Update}{0.90}{2.82} &
+                \gitsvnplot{false}{Blame}{1.91}{3.04} &
+                \gitsvnplot{false}{Size}{181.0}{132.0} \\
+                \multicolumn{6}{r}{\ref{foobar}} \\
+            \end{tabular}
+        \end{adjustbox}
+        \caption{Runtime of Git and Subversion Commands}
+    \end{figure}
 \end{frame}
 \note[itemize]{
     \item Data from Scott Chacon http://git-scm.com/about/small-and-fast
@@ -569,42 +578,44 @@
     % https://www.google.com/trends/explore?date=2005-05-01%202016-08-31&q=%2Fm%2F05vqwg,Subversion,%2Fm%2F08w6d6
     % Download csv in 4 year chunks to get weekly data
     % Adjust scale so that they match on overlapping weeks
-    \begin{tikzpicture}
-        \begin{axis}[
-            title={Google Trends Since First Git Release},
-            date coordinates in=x,
-            xmin=2005-04-01,
-            xmax=2016-09-01,
-            ymin=0,
-            ymax=226,
-            width=\textwidth,
-            height=0.8\textheight,
-            yticklabels={,,},
-            tick style={draw=none},
-            xtick={2006-01-01,2008-01-01,2010-01-01,2012-01-01,2014-01-01,2016-01-01},
-            xticklabel=\year,
-            xticklabel style={
-                font=\scriptsize,
-            },
-            axis x line*=bottom,
-            %hide y axis,
-            axis y line*=left,
-            axis line style={solarized-base01},
-            legend style={
-                at={(0.6,1)},
-                fill=solarized-base3!40,
-                %draw=none,
-                draw=solarized-base01,
-                font=\scriptsize,
-            },
-            legend columns=-1,
-        ]
-            \addplot[solarized-orange] table [col sep=comma,x=Week,y=Git] {google-trends.csv};
-            \addplot[solarized-blue] table [col sep=comma,x=Week,y=Subversion] {google-trends.csv};
-            \addplot[solarized-violet] table [col sep=comma,x=Week,y=Perforce] {google-trends.csv};
-            \legend{Git,Subversion,Perforce}
-        \end{axis}
-    \end{tikzpicture}
+    \begin{figure}
+        \begin{tikzpicture}
+            \begin{axis}[
+                date coordinates in=x,
+                xmin=2005-04-01,
+                xmax=2016-09-01,
+                ymin=0,
+                ymax=226,
+                width=\textwidth,
+                height=0.8\textheight,
+                yticklabels={,,},
+                tick style={draw=none},
+                xtick={2006-01-01,2008-01-01,2010-01-01,2012-01-01,2014-01-01,2016-01-01},
+                xticklabel=\year,
+                xticklabel style={
+                    font=\scriptsize,
+                },
+                axis x line*=bottom,
+                %hide y axis,
+                axis y line*=left,
+                axis line style={solarized-base01},
+                legend style={
+                    at={(0.6,1)},
+                    fill=solarized-base3!40,
+                    %draw=none,
+                    draw=solarized-base01,
+                    font=\scriptsize,
+                },
+                legend columns=-1,
+            ]
+                \addplot[solarized-orange] table [col sep=comma,x=Week,y=Git] {google-trends.csv};
+                \addplot[solarized-blue] table [col sep=comma,x=Week,y=Subversion] {google-trends.csv};
+                \addplot[solarized-violet] table [col sep=comma,x=Week,y=Perforce] {google-trends.csv};
+                \legend{Git,Subversion,Perforce}
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Google Trends Since First Git Release}
+    \end{figure}
 \end{frame}
 \note[itemize]{
     \item Dip every Christmas
