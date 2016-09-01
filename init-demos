@@ -22,3 +22,17 @@ EOL
 git add hello.c
 git commit -m 'Add hello'
 popd
+
+mkdir demos/04-trees-hashes-blobs
+pushd demos/04-trees-hashes-blobs
+git init
+cat >hello.c <<EOL
+#include <stdio.h>
+
+int main(void)
+{
+    printf("Hello World\n");
+    return 0;
+}
+EOL
+popd
