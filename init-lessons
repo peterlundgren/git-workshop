@@ -43,3 +43,106 @@ EOL
 git add index.html README.md
 git commit -m 'Add amazing webpage'
 popd
+
+mkdir lessons/02-branching-and-merging
+pushd lessons/02-branching-and-merging
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >index.html <<EOL
+<html>
+    <head>
+        <title>My First Git Repository</title>
+        <style type="text/css">
+            body { background-color: pink }
+        </style>
+    </head>
+    <body>
+        <h1>My First Git Repository</h1>
+        <p>My name is Peter Lundgren</p>
+    </body>
+</html>
+EOL
+cat >README.md <<EOL
+Lesson 2: Branching and Merging
+===============================
+
+We return to our simple web page. This time, we will make the same two changes
+as last time (changing the name and background color), but we will commit each
+change on a separate branch and then merge them back into master.
+
+1.  Create a branch called \`feature/change-name\` and checkout that branch
+    with \`git checkout -b feature/change-name\` (equivalent to
+    \`git branch feature/change-name\` followed by
+    \`git checkout feature/change-name\`).
+2.  Study the output of \`git branch\`
+3.  Change index.html to include your name.
+4.  Add and commit your change.
+5.  Study the output of \`git lol\`. \`git lol\` is an alias you configured
+    before class. View your aliases with \`git config --list | grep alias\`.
+6.  Return to master with \`git checkout master\`.
+7.  Create and checkout a branch called \`feature/change-background\`.
+8.  Study the output of \`git lol\`, and \`git lola\`. What's the difference
+    between the two?
+9.  Change the background color to your favorite color.
+10. Add and commit your change.
+11. Study the output of \`git lol\`, \`git lola\`,
+    \`git log -p feature/change-name --not master\`, and
+    \`git log -p feature/change-background --not master\`.
+12. Return to master with \`git checkout master\`.
+13. Merge the \`feature/change-name\` branch into master.
+14. Study the output of \`git lol\`, \`git lola\`,
+    \`git log -p feature/change-name --not master\`, and
+    \`git log -p feature/change-background --not master\`.
+15. Merge the \`feature/change-background\` branch into master.
+16. Study the output of \`git lol\`, \`git lola\`,
+    \`git log -p feature/change-name --not master\`, and
+    \`git log -p feature/change-background --not master\`.
+EOL
+git add index.html README.md
+git commit -m 'Add amazing webpage'
+popd
+
+mkdir lessons/03-tags
+pushd lessons/03-tags
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >README.md <<EOL
+Lesson 3: Tags
+==============
+
+There are two different kinds of tags in git: lightweight and annotated tags.
+Lightweight tags are similar to branches. They are simple named pointers. The
+difference is that they aren't allowed to change once they are created.
+Annotated tags are more similar to commits in that they also contain an author,
+timestamp, and message.
+
+1.  Create a new tag called foo pointing to the same commit that HEAD is
+    pointing to by running git tag <tagname>.
+2.  Study the output of \`git lol\`.
+3.  Create an annotated tag called bar pointing to the commit that added a.txt.
+    Use some of the \`git log\` commands you've learned to find the correct
+    commit. Use \`git help tag\` to find the correct arguments to \`git tag\`.
+4.  How do \`git show foo\` and \`git show bar\` differ because bar in an
+    annotated tag?
+EOL
+git add README.md
+git commit -m 'Lesson 3'
+cat >a.txt <<EOL
+ AAA
+A   A
+AAAAA
+A   A
+A   A
+EOL
+git add a.txt
+git commit -m 'Add a.txt'
+cat >b.txt <<EOL
+BBBB
+B   B
+BBBB
+B   B
+BBBB
+EOL
+git add b.txt
+git commit -m 'Add b.txt'
+popd

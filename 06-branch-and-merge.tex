@@ -1,0 +1,336 @@
+\section[Section]{Branch and Merge}
+
+\begin{frame}
+    \frametitle{Branches}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A
+            };
+            \gitbranch{master}{above=of A}{A}
+        \end{tikzpicture}
+        \caption{Branches are Pointers to Commits}
+    \end{figure}
+\end{frame}
+\note[itemize]{
+    \item By default, `git init` will create a master branch
+    \item Most repositories have a master branch because most people are too
+          lazy to change defaults
+    \item Branches are pointers that point to commits
+}
+
+\begin{frame}
+    \frametitle{\texttt{HEAD}}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A
+            };
+            \gitbranch{master}{above=of A}{A}
+            \gitHEAD{above=of master}{master}
+        \end{tikzpicture}
+        \caption{\texttt{HEAD} Points to Your Current Branch}
+    \end{figure}
+\end{frame}
+\note[itemize]{
+    \item \texttt{HEAD} points to current branch
+    \item \texttt{HEAD} is what you have checked out on your filesytem
+    \item \texttt{HEAD} is the parent of your next commit
+}
+
+\begin{frame}[fragile]
+    \frametitle{\texttt{git branch}}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A
+            };
+            \gitbranch{master}{above=of A}{A}
+            \gitHEAD{above=of master}{master}
+            \gitbranch{foo}{below=of A}{A}
+        \end{tikzpicture}
+        \caption{Creating a New Branch}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=0pt]{bash}
+        $ git branch foo
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item \texttt{HEAD} points to current branch
+    \item \texttt{HEAD} is what you have checked out on your filesytem
+    \item \texttt{HEAD} is the parent of your next commit
+    \item Branches are cheap and fast. Writes 41 bytes to a file; that's it.
+    \item \texttt{git branch foo} Creates a new branch called foo pointing to
+          the same commit that HEAD is pointing to.
+}
+
+\begin{frame}[fragile]
+    \frametitle{\texttt{git checkout}}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A
+            };
+            \gitbranch{master}{above=of A}{A}
+            \oldgitHEAD{above=of master}{master}
+            \gitbranch{foo}{below=of A}{A}
+            \gitHEAD{below=of foo}{foo}
+        \end{tikzpicture}
+        \caption{Switching Branches}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=0pt]{bash}
+        $ git checkout foo
+        $ git branch
+        * foo
+          master
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item \texttt{git checkout} switches the current branch by changing what
+          \texttt{HEAD} points to. If necessary, it will update your
+          filesystem to match the commit pointed to by the branch.
+    \item \texttt{git branch} will show you all of the local branches and put a
+          star next to your current branch.
+}
+
+\begin{frame}[fragile]
+    \frametitle{Make a Commit}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- B
+            };
+            \gitbranch{master}{above=of A}{A}
+            \oldgitbranch{foo}{below=of A}{A}
+            \oldgitHEAD{below=of foo}{foo}
+            \gitbranch{foo}{below=of B}{B}
+            \gitHEAD{below=of foo}{foo}
+        \end{tikzpicture}
+        \caption{Make a Commit}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=0pt]{bash}
+        $ git commit
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item \texttt{git commit} Creates a new commit who's parent is whatever
+          commit HEAD is pointing at. Then, it moves the branch \texttt{HEAD}
+          is pointing at to the new commit.
+    \item The only branch that moves is what \texttt{HEAD} points at.
+    \item If you're ever scared about doing something, drop a branch behind. As
+          long as you don't have a branch checked out, it's impossible to lose
+          where it was.
+}
+
+\begin{frame}[fragile]
+    \frametitle{Make Another Commit}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- B -- C
+            };
+            \gitbranch{master}{above=of A}{A}
+            \oldgitbranch{foo}{below=of B}{B}
+            \oldgitHEAD{below=of foo}{foo}
+            \gitbranch{foo}{below=of C}{C}
+            \gitHEAD{below=of foo}{foo}
+        \end{tikzpicture}
+        \caption{Make Another Commit}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=0pt]{bash}
+        $ git commit
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Checkout a New Branch}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- B -- C
+            };
+            \gitbranch{master}{above=of A}{A}
+            \gitbranch{bar}{below=of A}{A}
+            \gitHEAD{below=of bar}{bar}
+            \gitbranch{foo}{below=of C}{C}
+            \oldgitHEAD{below=of foo}{foo}
+        \end{tikzpicture}
+        \caption{Checkout a New Branch}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=0pt]{bash}
+        $ git checkout -b bar master
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item \texttt{git checkout -b} is a shortcut for creating a branch and
+          immediately checking it out.
+}
+
+\begin{frame}[fragile]
+    \frametitle{Work on a New Branch}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- {D -- E, B -- C}
+            };
+            \gitbranch{master}{above=of A}{A}
+            \gitbranch{foo}{below=of C}{C}
+            \gitbranch{bar}{above=of E}{E}
+            \gitHEAD{above=of bar}{bar}
+            \oldgitbranch{bar}{below=of A}{A}
+            \oldgitHEAD{below=of bar}{bar}
+        \end{tikzpicture}
+        \caption{Work on a New Branch}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=0pt]{bash}
+        $ git commit
+        $ git commit
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item Make two commits on branch bar
+}
+
+\begin{frame}[fragile]
+    \frametitle{Merging}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- {D -- E, B -- C}
+            };
+            \gitbranch{master}{above=of A}{A}
+            \gitbranch{foo}{below=of C}{C}
+            \gitbranch{bar}{above=of E}{E}
+            \gitHEAD{above=of master}{master}
+            \oldgitHEAD{above=of bar}{bar}
+        \end{tikzpicture}
+        \caption{Checkout master}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=0pt]{bash}
+        $ git checkout master
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item Checkout the branch you want to modify / merge into
+    \item Switch back to the master branch
+    \item Next, I want the master have the changes on the bar branch
+    \item What should happen?
+    \item Git checks to see if master is reachable from bar. If it is, it does
+          the easiest possible thing.
+}
+
+\begin{frame}[fragile]
+    \frametitle{Fast-Forward Merge}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- {D -- E, B -- C}
+            };
+            \gitbranch{master}{above left=of E}{E}
+            \gitbranch{foo}{below=of C}{C}
+            \gitbranch{bar}{above=of E}{E}
+            \gitHEAD{above=of master}{master}
+            \oldgitbranch{master}{above=of A}{A}
+            \oldgitHEAD{above=of master}{master}
+        \end{tikzpicture}
+        \caption{Fast-Forward Merge}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=0pt]{bash}
+        $ git merge bar
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item Want master took look like bar.
+    \item It moves master up to the same commit that bar is at.
+    \item Next, merge foo.
+    \item What should happen?
+    \item It's going to do a non-fast-forward merge. It has to create a new
+          tree. The snapshot with both master and foo doesn't exist yet.
+}
+
+\begin{frame}[fragile]
+    \frametitle{Non-Fast-Forward Merge}
+    \centering
+    \begin{figure}
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- {D -- E, B -- C} -- F
+            };
+            \gitbranch{master}{above=of F}{F}
+            \gitbranch{foo}{below=of C}{C}
+            \gitbranch{bar}{above=of E}{E}
+            \gitHEAD{above=of master}{master}
+            \oldgitbranch{master}{above left=of E}{E}
+            \oldgitHEAD{above=of master}{master}
+        \end{tikzpicture}
+        \caption{Non-Fast-Forward Merge}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=0pt]{bash}
+        $ git merge foo
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item Git created a new snapshot, F, and moved master to it.
+    \item F now has both the changes on foo and bar.
+    \item Git encodes this by having a commit with two parents.
+    \item Neither foo nor bar moved. Branches that are not checked out will not
+          move.
+}
+
+\begin{frame}
+    \frametitle{Lesson 2}
+    \alert{Lesson 2}: Branching and Merging
+\end{frame}
+\note[itemize]{
+    \item Demo lesson afterwards.
+    \item cat .git/HEAD
+    \item cat .git/refs/heads/feature/change-name
+    \item Branches are just 41 byte files.
+}
+
+\begin{frame}
+    \frametitle{Tags}
+    Branches that Don't Move
+\end{frame}
+\note[itemize]{
+    \item If you understand branches, then tags are easy.
+}
+
+\begin{frame}
+    \frametitle{Lesson 3}
+    \alert{Lesson 3}: Tags
+\end{frame}
+
+\begin{frame}
+    \frametitle{12 Everyday Commands}
+    \begin{multicols}{3}
+        \begin{itemize}
+            \setlength\itemsep{3em}
+            \item \alert{add}
+            \item \alert{branch}
+            \item \alert{checkout}
+            \item \alert{commit}
+            \item \alert{diff}
+            \item fetch
+            \item \alert{help}
+            \item \alert{log}
+            \item \alert{merge}
+            \item push
+            \item rebase
+            \item \alert{status}
+        \end{itemize}
+    \end{multicols}
+\end{frame}
+\note[itemize]{
+    \item We've added branch, checkout, and merge
+}
