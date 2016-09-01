@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+mkdir demos
+
+mkdir demos/01-git-help
+
+mkdir demos/02-git-init
