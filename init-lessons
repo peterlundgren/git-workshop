@@ -1,0 +1,45 @@
+#!/bin/bash
+
+set -e
+
+mkdir lessons
+
+mkdir lessons/01-three-stage-thinking
+pushd lessons/01-three-stage-thinking
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >index.html <<EOL
+<html>
+    <head>
+        <title>My First Git Repository</title>
+        <style type="text/css">
+            body { background-color: pink }
+        </style>
+    </head>
+    <body>
+        <h1>My First Git Repository</h1>
+        <p>My name is Peter Lundgren</p>
+    </body>
+</html>
+EOL
+cat >README.md <<EOL
+Lesson 1: Three Stage Thinking
+==============================
+
+1.  Change index.html to include your name.
+2.  Change the background color to your favorite color.
+3.  Study the output of \`git status\` and \`git diff\`
+4.  Stage the file with \`git add index.html\`
+5.  Study the output of \`git status\`, \`git diff\` and \`git diff --staged\`
+6.  Maybe we should split this into two commits. Unstage index.html by
+    following the advice from \`git status\`.
+7.  Stage your name change first with \`git add -p\` and commit the change.
+8.  Next, stage and commit the background-color change. This time use
+    \`git commit --verbose\`. Note that the commit message prompt shows you the
+    diff of what you are about to commit.
+9.  Study the output of \`git log\`, \`git lol\`, \`git log -p\`, and
+    \`git log --stat\`.
+EOL
+git add index.html README.md
+git commit -m 'Add amazing webpage'
+popd

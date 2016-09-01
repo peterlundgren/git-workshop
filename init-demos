@@ -7,3 +7,18 @@ mkdir demos
 mkdir demos/01-git-help
 
 mkdir demos/02-git-init
+
+mkdir demos/03-three-stage-thinking
+pushd demos/03-three-stage-thinking
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >hello.c <<EOL
+int main(void)
+{
+    printf("Hello World\n");
+    return 0;
+}
+EOL
+git add hello.c
+git commit -m 'Add hello'
+popd
