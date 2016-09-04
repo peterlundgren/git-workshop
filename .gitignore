@@ -6,5 +6,9 @@
 *.nav
 *.out
 *.pdf
+*.pdfpc
+*.pytxcode
 *.snm
 *.toc
+*.vrb
+_minted-presentation/
