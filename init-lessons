@@ -128,21 +128,127 @@ EOL
 git add README.md
 git commit -m 'Lesson 3'
 cat >a.txt <<EOL
- AAA
-A   A
-AAAAA
-A   A
-A   A
+ AA
+A  A
+AAAA
+A  A
+A  A
 EOL
 git add a.txt
 git commit -m 'Add a.txt'
 cat >b.txt <<EOL
-BBBB
-B   B
-BBBB
-B   B
-BBBB
+BBB
+B  B
+BBB
+B  B
+BBB
 EOL
 git add b.txt
 git commit -m 'Add b.txt'
+popd
+
+mkdir lessons/04-rebase
+pushd lessons/04-rebase
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >README.md <<EOL
+Lesson 4: Rebase
+================
+
+The history of this repository currently looks like this:
+
+         E---F---G feature/bar
+        /
+    ---A---B master
+        \\
+         C---D feature/foo
+
+The goal of this lesson is to use \`git rebase\` to replay the history so that
+it looks like this:
+
+    ---A---B---C---D---E---F---G master
+
+Consult \`git help rebase\` if you need help.
+
+When you're done, \`git lola\` should look like the following (your hashes will
+be different).
+
+    * 5055df0 (HEAD, master) Add g.txt
+    * fe5b473 Add f.txt
+    * 023cfb4 Add e.txt
+    * c8c41c8 Add d.txt
+    * 9587aa7 Add c.txt
+    * 3c48f2c Add b.txt
+    * 5966c58 Add a.txt
+    * 590dbaf Lesson 4
+    * a869b2d Initial commit
+EOL
+git add README.md
+git commit -m 'Lesson 4'
+cat >a.txt <<EOL
+ AA
+A  A
+AAAA
+A  A
+A  A
+EOL
+git add a.txt
+git commit -m 'Add a.txt'
+cat >b.txt <<EOL
+BBB
+B  B
+BBB
+B  B
+BBB
+EOL
+git add b.txt
+git commit -m 'Add b.txt'
+git checkout -b feature/foo HEAD~1
+cat >c.txt <<EOL
+ CCC
+C
+C
+C
+ CCC
+EOL
+git add c.txt
+git commit -m 'Add c.txt'
+cat >d.txt <<EOL
+DDD
+D  D
+D  D
+D  D
+DDD
+EOL
+git add d.txt
+git commit -m 'Add d.txt'
+git checkout -b feature/bar HEAD~2
+cat >e.txt <<EOL
+EEEE
+E
+EEE
+E
+EEEE
+EOL
+git add e.txt
+git commit -m 'Add e.txt'
+cat >f.txt <<EOL
+FFFF
+F
+FFF
+F
+F
+EOL
+git add f.txt
+git commit -m 'Add f.txt'
+cat >g.txt <<EOL
+ GGG
+G
+G GG
+G  G
+ GGG
+EOL
+git add g.txt
+git commit -m 'Add g.txt'
+git checkout master
 popd
