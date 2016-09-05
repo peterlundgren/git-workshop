@@ -4,12 +4,12 @@ set -e
 
 mkdir demos
 
-mkdir demos/01-git-help
+mkdir demos/1-git-help
 
-mkdir demos/02-git-init
+mkdir demos/2-git-init
 
-mkdir demos/03-three-stage-thinking
-pushd demos/03-three-stage-thinking
+mkdir demos/3-three-stage-thinking
+pushd demos/3-three-stage-thinking
 git init
 git commit --allow-empty -m 'Initial commit'
 cat >hello.c <<EOL
@@ -23,8 +23,8 @@ git add hello.c
 git commit -m 'Add hello'
 popd
 
-mkdir demos/04-trees-hashes-blobs
-pushd demos/04-trees-hashes-blobs
+mkdir demos/4-trees-hashes-blobs
+pushd demos/4-trees-hashes-blobs
 git init
 cat >hello.c <<EOL
 #include <stdio.h>

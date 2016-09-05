@@ -4,8 +4,8 @@ set -e
 
 mkdir lessons
 
-mkdir lessons/01-three-stage-thinking
-pushd lessons/01-three-stage-thinking
+mkdir lessons/1-three-stage-thinking
+pushd lessons/1-three-stage-thinking
 git init
 git commit --allow-empty -m 'Initial commit'
 cat >index.html <<EOL
@@ -44,8 +44,8 @@ git add index.html README.md
 git commit -m 'Add amazing webpage'
 popd
 
-mkdir lessons/02-branching-and-merging
-pushd lessons/02-branching-and-merging
+mkdir lessons/2-branching-and-merging
+pushd lessons/2-branching-and-merging
 git init
 git commit --allow-empty -m 'Initial commit'
 cat >index.html <<EOL
@@ -102,8 +102,8 @@ git add index.html README.md
 git commit -m 'Add amazing webpage'
 popd
 
-mkdir lessons/03-tags
-pushd lessons/03-tags
+mkdir lessons/3-tags
+pushd lessons/3-tags
 git init
 git commit --allow-empty -m 'Initial commit'
 cat >README.md <<EOL
@@ -147,8 +147,8 @@ git add b.txt
 git commit -m 'Add b.txt'
 popd
 
-mkdir lessons/04-rebase
-pushd lessons/04-rebase
+mkdir lessons/4-rebase
+pushd lessons/4-rebase
 git init
 git commit --allow-empty -m 'Initial commit'
 cat >README.md <<EOL

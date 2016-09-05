@@ -2,8 +2,8 @@ Demos
 =====
 
 
-01 git help
------------
+1 git help
+----------
 
     # List of common commands
     git help
@@ -16,8 +16,8 @@ High quality reference material, but not very good tutorials. Start with
 Google, then read the relevant man pages.
 
 
-02 git init
------------
+2 git init
+----------
 
     git init
     ls -a
@@ -29,8 +29,8 @@ adding a single empty file. This makes it easier to rewrite history near the
 beginning of your repo.
 
 
-03 Three Stage Thinking
------------------------
+3 Three Stage Thinking
+----------------------
 
     ls
     cat hello.c
@@ -60,8 +60,8 @@ beginning of your repo.
     git status
 
 
-04 Trees, Hashes, and Blobs
----------------------------
+4 Trees, Hashes, and Blobs
+--------------------------
 
     tree -a
     git add hello.c
