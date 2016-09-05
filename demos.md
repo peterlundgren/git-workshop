@@ -2,6 +2,9 @@ Demos
 =====
 
 
+Make sure rebase.autoStash is disabled.
+
+
 1 git help
 ----------
 
@@ -181,3 +184,112 @@ Scroll up to rebase prompt
 
     git rebase --continue
     git lol
+
+
+6 git stash
+-----------
+
+Two branches with changes:
+
+    git lola
+    git log -p foo
+    git log -p bar
+
+Unstaged changes:
+
+    git status
+    git diff
+
+Merge in foo:
+
+    git merge foo
+
+As expected, git won't overwrite our unstaged changes
+
+    $ git merge foo
+    Updating 87f935b..0a0b17f
+    error: Your local changes to the following files would be overwritten by merge:
+        hello.c
+    Please commit your changes or stash them before you merge.
+    Aborting
+
+Use stash:
+
+    git stash
+    git status
+
+That stashed our unstaged changes. Where did they go?
+
+    git stash list
+    git stash show
+    git stash show -p
+    git lola
+
+Stash shows up as a commit and a merge commit on `git lola`.
+
+Do the merge now that we have a clean working tree:
+
+    git merge foo
+
+Reapply the unstaged changes:
+
+    git stash pop
+    git diff
+    git stash list
+
+No longer on the list of stashes.
+
+Same procedure for rebase. Let's rebase bar onto master.
+
+    git lola
+    git checkout bar
+    git stash
+    git checkout bar
+    git stash pop
+    git lola
+
+    git rebase master
+
+You get the idea now.
+
+    git stash
+    git rebase master
+    git lola
+
+Add '!' to hello.c
+
+    git status
+    git diff
+    git stash
+
+You can have multiple stashes. The stash list is a stack.
+
+    git stash list
+    git stash list -p
+    git lola # only shows most recent stash
+
+Apply the stashes
+
+    git stash pop
+    git status
+    git diff
+    git stash list -p
+
+Git stash is conservative
+
+    $ git stash pop
+    error: Your local changes to the following files would be overwritten by merge:
+        hello.c
+    Please commit your changes or stash them before you merge.
+    Aborting
+
+Commit changes first
+
+    git diff
+    git add hello.c
+    git commit -m 'Be emphatic!'
+    git stash pop
+    git diff
+
+This pattern is so common that there's a config option to do this automatically
+on rebase (config.autoStash).

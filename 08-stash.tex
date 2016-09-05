@@ -1,0 +1,40 @@
+\section[Section]{Stash}
+
+\begin{frame}[fragile]
+    \frametitle{Stash}
+    \small
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{console}
+$ git checkout foo
+error: Your local changes to the following files would
+be overwritten by checkout:
+    a.txt
+    b.txt
+Please commit your changes or stash them before you
+switch branches.
+Aborting
+$ git merge foo
+error: The following untracked working tree files would
+be overwritten by merge:
+    a.txt
+    b.txt
+Please move or remove them before you merge.
+Aborting
+$ git rebase -i HEAD~3
+Cannot rebase: You have unstaged changes.
+Please commit or stash them.
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item You'll run into these error message before too long
+    \item Checkout, merge, and rebase all want clean working directories
+    \item so that they don't mess with your unstaged and uncommitted work
+    \item They recommend to commit or stash your changes. What is stash?
+}
+
+\begin{frame}
+    \frametitle{Stash}
+    \alert{Demo 6}: \texttt{git stash}
+\end{frame}
+\note[itemize]{
+    \item \alert{Demo 6}: \texttt{git stash}
+}

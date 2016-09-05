@@ -105,3 +105,49 @@ EOL
 git add g.txt
 git commit -m 'Add g.txt'
 popd
+
+mkdir demos/6-stash
+pushd demos/6-stash
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >hello.c <<EOL
+int main(void)
+{
+    printf("Hello World\n");
+    return 0;
+}
+EOL
+git add hello.c
+git commit -m 'Add hello'
+git checkout -b foo
+cat >hello.c <<EOL
+#include <stdio.h>
+
+int main(void)
+{
+    printf("Hello World\n");
+    return 0;
+}
+EOL
+git add hello.c
+git commit -m 'Include stdio'
+git checkout -b bar HEAD~1
+cat >hello.c <<EOL
+int main(void)
+{
+    printf("Hello Class\n");
+    return 0;
+}
+EOL
+git add hello.c
+git commit -m 'Hello Class'
+git checkout master
+cat >hello.c <<EOL
+int main(void)
+{
+    printf("Hello World\n");
+    return 0;
+}
+/* Unstaged modifications */
+EOL
+popd
