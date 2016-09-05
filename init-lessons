@@ -252,3 +252,92 @@ git add g.txt
 git commit -m 'Add g.txt'
 git checkout master
 popd
+
+mkdir lessons/5-interactive-rebase
+pushd lessons/5-interactive-rebase
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >README.md <<EOL
+Lesson 5: Interactive Rebase
+============================
+
+The master branch currently has 5 files: a.txt, b.txt, c.txt, d.txt, and e.txt
+(plus this README.md). Their contents are correct, but the development process
+to get them here was a bit messy. Your goal is to clean up the history so that
+it looks like the following (your sha1sums will be different):
+
+    $ git lol
+    * 30854df (HEAD -> master) Add e.txt
+    * 8b08559 Add d.txt
+    * 9e156c8 Add c.txt
+    * d1dd11c Add b.txt
+    * 2ecdcf3 Add a.txt
+    * c60e835 Lesson 5
+    * dd52767 Initial commit
+
+You have three different tasks to complete:
+
+1.  Squash the two commits working on d.txt together.
+2.  Split up the commit adding both a.txt and b.txt.
+3.  Reorder the commits so that they are in the order a, b, c, d, e.
+
+I recommend concentrating on one task at a time. Before each rebase, drop a
+branch with \`git branch <branchname>\`. That way, you can easily return to a
+previous step with \`git reset --hard <branchname>\` if you make a mistake.
+EOL
+git add README.md
+git commit -m 'Lesson 5'
+cat >c.txt <<EOL
+ CCC
+C
+C
+C
+ CCC
+EOL
+git add c.txt
+git commit -m 'Add c.txt'
+cat >a.txt <<EOL
+ AA
+A  A
+AAAA
+A  A
+A  A
+EOL
+git add a.txt
+cat >b.txt <<EOL
+BBB
+B  B
+BBB
+B  B
+BBB
+EOL
+git add b.txt
+git commit -m 'Add a.txt and b.txt'
+cat >d.txt <<EOL
+ddd
+d  d
+d  d
+d  d
+ddd
+EOL
+git add d.txt
+git commit -m 'Add d.txt'
+cat >e.txt <<EOL
+EEEE
+E
+EEE
+E
+EEEE
+EOL
+git add e.txt
+git commit -m 'Add e.txt'
+cat >d.txt <<EOL
+DDD
+D  D
+D  D
+D  D
+DDD
+EOL
+git add d.txt
+git commit -m 'Capitalize D'
+popd

@@ -93,3 +93,91 @@ beginning of your repo.
     git commit -m 'hola'
     # See that the tree points to the same blob twice.
     git cat-file -p <tree>
+
+
+5 git rebase --interactive
+--------------------------
+
+    git lol
+    git rebase -i <Initial commit sha>
+
+Opens your editor with a list of commits. The order is the OPPOSITE as git log.
+`git rebase -i` puts the oldest commit on the top.
+
+It presents you with a list of options.
+
+    # Commands:
+    #  p, pick = use commit
+    #  r, reword = use commit, but edit the commit message
+    #  e, edit = use commit, but stop for amending
+    #  s, squash = use commit, but meld into previous commit
+    #  f, fixup = like "squash", but discard this commit's log message
+    #  x, exec = run command (the rest of the line) using shell
+
+Reword a commit
+
+    git lol
+    git rebase -i HEAD~7
+
+Reorder a couple commits
+
+    git lol
+    git rebase -i <Initial commit sha>
+
+Delete a commit
+
+    git lol
+    git rebase -i <Initial commit sha>
+
+Squash two commits together
+
+    git lol
+    git rebase -i <Initial commit sha>
+
+Fixup two commits together
+
+    git lol
+    git rebase -i <Initial commit sha>
+
+Let's split the commit we just fixuped.
+
+    git help rebase
+    /SPLITTING
+
+Edit the commit. Read the prompt when stopped for editing.
+
+    You can amend the commit now, with
+
+        git commit --amend
+
+    Once you are satisfied with your changes, run
+
+        git rebase --continue
+
+We're currently at the commit we marked to edit.
+
+    git status
+    # interactive rebase in progress; onto 8db6b4a
+    git lol
+    git log -p
+
+Undo the commit
+
+    git help reset
+
+--soft undos the commit, --mixed undos the add and commit, --hard drops all
+changes to tracked files. Similar to `svn revert `. Be careful!
+
+    git reset HEAD~1
+    git status
+    git add a.txt
+    git commit -m 'Add a.txt'
+    git add b.txt
+    git commit -m 'Add b.txt'
+    git lol
+    git log -p
+
+Scroll up to rebase prompt
+
+    git rebase --continue
+    git lol

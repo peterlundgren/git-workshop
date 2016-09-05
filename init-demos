@@ -36,3 +36,72 @@ int main(void)
 }
 EOL
 popd
+
+mkdir demos/5-interactive-rebase
+pushd demos/5-interactive-rebase
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >a.txt <<EOL
+ AA
+A  A
+AAAA
+A  A
+A  A
+EOL
+git add a.txt
+git commit -m 'Add a.txt'
+cat >b.txt <<EOL
+BBB
+B  B
+BBB
+B  B
+BBB
+EOL
+git add b.txt
+git commit -m 'Add b.txt'
+cat >c.txt <<EOL
+ CCC
+C
+C
+C
+ CCC
+EOL
+git add c.txt
+git commit -m 'Add c.txt'
+cat >d.txt <<EOL
+DDD
+D  D
+D  D
+D  D
+DDD
+EOL
+git add d.txt
+git commit -m 'Add d.txt'
+cat >e.txt <<EOL
+EEEE
+E
+EEE
+E
+EEEE
+EOL
+git add e.txt
+git commit -m 'Add e.txt'
+cat >f.txt <<EOL
+FFFF
+F
+FFF
+F
+F
+EOL
+git add f.txt
+git commit -m 'Add f.txt'
+cat >g.txt <<EOL
+ GGG
+G
+G GG
+G  G
+ GGG
+EOL
+git add g.txt
+git commit -m 'Add g.txt'
+popd
