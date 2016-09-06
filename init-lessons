@@ -341,3 +341,87 @@ EOL
 git add d.txt
 git commit -m 'Capitalize D'
 popd
+
+mkdir lessons/6-merge-conflicts
+pushd lessons/6-merge-conflicts
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >README.md <<EOL
+Lesson 6: Merge Conflict
+========================
+
+In this lesson, we will practice resolving a merge conflict.
+
+If you would like to try the diff3 conflictsytle, run the following:
+
+    git config --global merge.conflictstyle diff3
+
+You can return it to the default setting with:
+
+    git config --global merge.conflictstyle merge
+
+1.  Familiarize yourself with the history of the master and bugfixes branches.
+2.  Try to merge bugfixes into master with \`git checkout master\` followed by
+    \`git merge bugfixes\`.
+3.  Abort the merge with \`git merge --abort\`.
+4.  Verify that you are back where you started.
+5.  Attempt the merge again.
+6.  Determine what the conflicts are.
+7.  Resolve the conflicts.
+8.  Mark the conflicts resolved with \`git add\`.
+9.  Finish the merge with \`git commit\`.
+10. Study the resulting history. What do \`git log -c\`, \`git log -m -p\`, and
+    \`git log --first-parent\` do?
+EOL
+git add README.md
+git commit -m 'Lesson 6'
+cat >hello.c <<EOL
+int main(void)
+{
+    printf("Hello World");
+}
+EOL
+git add hello.c
+git commit -m 'Add hello'
+git checkout -b bugfixes
+cat >hello.c <<EOL
+#include <stdio.h>
+
+int main(void)
+{
+    printf("Hello World");
+}
+EOL
+git add hello.c
+git commit -m 'Include stdio'
+cat >hello.c <<EOL
+#include <stdio.h>
+
+int main(void)
+{
+    printf("Hello World\n");
+}
+EOL
+git add hello.c
+git commit -m 'Print newline'
+cat >hello.c <<EOL
+#include <stdio.h>
+
+int main(void)
+{
+    printf("Hello World\n");
+    return 0;
+}
+EOL
+git add hello.c
+git commit -m 'Return 0 from main'
+git checkout master
+cat >hello.c <<EOL
+int main(void)
+{
+    printf("Hello Class");
+}
+EOL
+git add hello.c
+git commit -m 'Hello Class'
+popd

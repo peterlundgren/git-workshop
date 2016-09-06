@@ -1,0 +1,163 @@
+\section[Section]{Conflicts}
+
+\begin{frame}
+    \frametitle{Managing Conflicts}
+    \begin{itemize}
+        \item \texttt{git merge}
+        \item \texttt{git rebase}
+        \item \texttt{git stash pop}
+    \end{itemize}
+\end{frame}
+\note[itemize]{
+    \item Merge, rebase, and stash pop can result in conflicts
+}
+
+\begin{frame}[fragile]
+    \frametitle{Merge Conflict}
+    \small
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{console}
+$ git merge bugfixes
+Auto-merging hello.c
+CONFLICT (content): Merge conflict in hello.c
+Automatic merge failed; fix conflicts and then commit
+the result.
+$ git status
+# On branch master
+# You have unmerged paths.
+#   (fix conflicts and run "git commit")
+#   (use "git merge --abort" to abort the merge)
+#
+# Unmerged paths:
+#   (use "git add <file>..." to mark resolution)
+#
+#       both modified:   hello.c
+#
+no changes added to commit (use "git add" and/or
+"git commit -a")
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item If a merge conflicts, it will stop before creating the merge commit
+    \item Git status will remind you that you have conflicts (unmerged paths).
+    \item Either abort or resolve the changes
+}
+
+\begin{frame}[fragile]
+    \frametitle{Merge Conflict Markers}
+    \small
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{c}
+#include <stdio.h>
+
+int main(void)
+{
+<<<<<<< HEAD
+    printf("Hello Class");
+=======
+    printf("Hello World\n");
+    return 0;
+>>>>>>> bugfixes
+}
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item Traditional conflict markers.
+    \item Same as in svn.
+}
+
+
+\begin{frame}[fragile]
+    \frametitle{Merge Conflict Markers}
+    \small
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{console}
+$ git config --global merge.conflictstyle diff3
+    \end{minted}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{c}
+#include <stdio.h>
+
+int main(void)
+{
+<<<<<<< HEAD
+    printf("Hello Class");
+||||||| merged common ancestors
+    printf("Hello World");
+=======
+    printf("Hello World\n");
+    return 0;
+>>>>>>> bugfixes
+}
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item Alternatively, the diff3 style, which I highly recommend, adds the
+          merge base in the middle
+}
+
+\begin{frame}[fragile]
+    \frametitle{Merge Tools}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{console}
+$ git mergetool --tool=<tool>
+    \end{minted}
+    \begin{multicols}{3}
+    \begin{itemize}
+        \item araxis
+        \item bc
+        \item bc3
+        \item codecompare
+        \item deltawalker
+        \item diffmerge
+        \item diffuse
+        \item ecmerge
+        \item emerge
+        \item examdiff
+        \item gvimdiff
+        \item gvimdiff2
+        \item gvimdiff3
+        \item kdiff3
+        \item meld
+        \item opendiff
+        \item p4merge
+        \item tkdiff
+        \item tortoisemerge
+        \item vimdiff
+        \item vimdiff2
+        \item vimdiff3
+        \item winmerge
+    \end{itemize}
+    \end{multicols}
+\end{frame}
+\note[itemize]{
+    \item If you'd like to use a merge tool,
+    \item these are all supported out of the box
+    \item Can use others with a little bit of configuration to tell git how to
+          launch them
+}
+
+\begin{frame}
+    \frametitle{Merge Conflicts}
+    Git stops before creating merge commit. Either:
+    \medskip
+    \begin{enumerate}[1.]
+        \item Abort with \texttt{git merge --abort}
+    \end{enumerate}
+    \medskip
+    or
+    \medskip
+    \begin{enumerate}[1.]
+        \item Resolve the conflicts
+        \item Mark files resolved with \texttt{git add <file>}
+        \item Finish the merge with \texttt{git commit}
+    \end{enumerate}
+\end{frame}
+\note[itemize]{
+    \item Easier said than done...
+    \item Conflicts are recorded in merge commit message
+}
+
+\begin{frame}
+    \frametitle{Lesson 6}
+    \alert{Lesson 6}: Merge Conflicts
+\end{frame}
+\note[itemize]{
+    \item ... so let's do it
+    \item \alert{Lesson 6}: Merge Conflicts
+}
