@@ -4,6 +4,8 @@ Demos
 
 Make sure rebase.autoStash is disabled.
 
+Have a fork of linux ready.
+
 
 1 git help
 ----------

@@ -27,6 +27,51 @@
 }
 
 \begin{frame}
+    \frametitle{Commit Messages}
+    The Technical Bits
+    \begin{itemize}
+        \item Short (aim for 50 characters or less) summary
+        \item Followed by a blank line
+        \item Body wrapped to 72 characters
+    \end{itemize}
+\end{frame}
+\note[itemize]{
+    \item \alert{Webpage}: \url{http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html}
+    \item Summary line must be separated by a blank space or many tools get a
+          little confused
+    \item Some views truncate the summary line; soft 50; hard 72
+    \item Hard wrap body to 72 characters
+    \item \texttt{git log}, \texttt{git format-patch}, etc do not wrap message
+}
+
+\begin{frame}
+    \frametitle{Commit Messages}
+    The Conventional Bits
+    \begin{itemize}
+        \item Make your commits atomic
+        \item Justify your changes; write detailed messages
+        \item Write is the imperative: "Fix bug" and not "Fixed bug" or
+              "Fixes bug"
+        \item Present tense for current commit
+        \item Past tense for earlier commits
+        \item Future tense for later commits
+        \item No period on subject line
+        \item Meta-data at the bottom
+    \end{itemize}
+\end{frame}
+\note[itemize]{
+    \item These are common expectations
+    \item Like most social conventions, will be used to judge you more so than
+          that they are technically superior
+    \item I include them here so that you can understand and fit in
+    \item Atomic: words like and, also, consider splitting commit
+    \item Justify: open-source mailing list mentality; what, why, how
+    \item Imperative style dates back to, at least, GNU changelogs
+    \item Meta-data at the bottom: signed-of-by, change-id, issue tracker
+    \item Look at a linux kernel log
+}
+
+\begin{frame}
     \frametitle{12 Everyday Commands}
     \begin{multicols}{3}
         \begin{itemize}
