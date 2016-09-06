@@ -293,3 +293,89 @@ Commit changes first
 
 This pattern is so common that there's a config option to do this automatically
 on rebase (config.autoStash).
+
+
+7 git submodule
+---------------
+
+I have three projects already setup for this example.
+
+    ls
+    ls remotes
+
+Git can use several different file protocols to communicate with remotes. I'm
+going to use file system access.
+
+    git clone remotes/hello.git
+    cd hello
+    git remote -v
+    cat hello.c
+
+Hello world program that uses two modules to provide functionality. Color
+module to color the console output. Greeting module to print the greeting. I've
+already implemented these modules, so this is maybe a bit out of order. Now,
+we'll add them as submodules.
+
+    git submodule add `readlink -f ../remotes/color.git`
+    git status
+
+The submodule path color is treated like a file.
+
+    cat .gitmodules
+    git commit -m 'Add color submodule'
+    git log -p
+
+Note that it shows the commit hash of color.
+
+    git submodule add `readlink -f ../remotes/greeting.git`
+    git status
+    git diff --staged
+    git commit -m 'Add greeting submodule'
+    git log -p
+    git lol
+
+    make
+    ./hello
+
+Now we're two commits ahead of origin/master. Push these changes:
+
+    git push origin master
+    git lol
+
+Now let's make a change.
+
+    cd color
+    vi color.c # Change color
+    git status
+    cd ..
+    git status
+    cd color
+    git add color.c
+    git commit -m 'New color'
+    cd ..
+    git status
+    git add color
+    git commit -m 'Change color submodule commit'
+    git log -p
+
+Note that the subproject commit has changed.
+
+It is important that you push the submodules first. What happens if you don't?
+
+    git push origin master
+    cd ..o
+    git clone --recursive remotes/hello.git hello2
+    ...
+    Fetched in submodule path 'color', but it did not contain
+    143e8757468247a0a05e32e55ccd77f15f4f4f17. Direct fetching of that commit
+    failed.
+
+Let's fix that.
+
+    cd hello/color
+    git push origin master
+    cd ../../
+    git clone --recursive remotes/hello.git hello3
+    cd hello3
+    make
+    ./hello

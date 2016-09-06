@@ -151,3 +151,92 @@ int main(void)
 /* Unstaged modifications */
 EOL
 popd
+
+mkdir demos/7-submodules
+pushd demos/7-submodules
+mkdir tmp
+mkdir tmp/color
+pushd tmp/color
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >color.h <<EOL
+void color_start(void);
+void color_end(void);
+EOL
+cat >color.c <<EOL
+#include <stdio.h>
+
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
+
+void color_start(void)
+{
+    printf(RED);
+}
+
+void color_end(void)
+{
+    printf(RESET);
+}
+EOL
+git add color.h color.c
+git commit -m 'Color module'
+popd
+mkdir tmp/greeting
+pushd tmp/greeting
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >greeting.h <<EOL
+void greeting(void);
+EOL
+cat >greeting.c <<EOL
+#include <stdio.h>
+
+void greeting(void)
+{
+    printf("Hello World\n");
+}
+EOL
+git add greeting.h greeting.c
+git commit -m 'Greeting module'
+popd
+mkdir tmp/hello
+pushd tmp/hello
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >.gitignore <<EOL
+hello
+EOL
+cat >Makefile <<EOL
+all:
+	gcc -o hello hello.c color/color.c greeting/greeting.c
+EOL
+cat >hello.c <<EOL
+#include "color/color.h"
+#include "greeting/greeting.h"
+
+int main(void)
+{
+    color_start();
+    greeting();
+    color_end();
+    return 0;
+}
+EOL
+git add .gitignore Makefile hello.c
+git commit -m 'Hello super-project'
+popd
+mkdir remotes
+pushd remotes
+git clone --bare `readlink -f ../tmp/color`
+git clone --bare `readlink -f ../tmp/greeting`
+git clone --bare `readlink -f ../tmp/hello`
+popd
+rm -rf tmp
+popd
