@@ -31,7 +31,15 @@ Add /usr/local/texlive/2016/bin/x86_64-linux to PATH.
 Build
 -----
 
+Other dependencies:
+
     sudo apt-get install python-pip
     sudo pip install Pygments
 
+Build once:
+
     make
+
+Rebuild on file changes:
+
+    auto-build
