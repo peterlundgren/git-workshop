@@ -1,0 +1,148 @@
+\section[Section]{Pros and Cons}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    \begin{itemize}
+        \item What is Git good at?
+        \item What is Git bad at?
+        \item When should you use Git?
+        \item When should you not use Git?
+        \item How is Git different from other version control systems?
+    \end{itemize}
+\end{frame}
+\note[itemize]{
+    \item \alert{Discussion}: Pros and Cons
+    \item Start Pros, Neutral, Cons list
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Creating a new repository is trivial
+\end{frame}
+\note[itemize]{
+    \item Here's a list of things that we might not have covered yet
+    \item \texttt{git init}
+    \item Don't need a dedicated server
+    \item All you need is a file system
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Staging Area
+\end{frame}
+\note[itemize]{
+    \item More complicated
+    \item Help you specify what changes belong in your next commit
+    \item Distinction between what’s on disk and what you’re about to commit
+    \item Commit part of some file’s changes
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Peer-to-peer synchronization over several protocols
+    \begin{itemize}
+        \item git://
+        \item ssh://
+        \item http://
+        \item https://
+        \item file://
+        \item nfs
+        \item email
+        \item RFC 1149
+    \end{itemize}
+\end{frame}
+\note[itemize]{
+    \item Peer-to-peer, from anyone to anyone
+    \item RFC 1149:
+          A Standard for the Transmission of IP Datagrams on Avian Carriers
+    \item Hashed, with commit messages, optionally cryptographically signed
+    \item If you can transfer a file, you can share changes
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Branching and Merging
+\end{frame}
+\note[itemize]{
+    \item Branches are a fundamental part of version control
+    \item A git branch is a 41 byte file
+    \item Branches are local, can be messy
+    \item They don’t require permission
+    \item They don’t have to be public
+    \item Merging algorithm was better than SVN’s until 1.8 in 2013
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Access Control
+\end{frame}
+\note[itemize]{
+    \item SVN must be managed at the central server
+    \item SVN can assign permissions per directory
+    \item Git is all or nothing per repository, read or write access, that's it
+    \item Can add a lot more control via other tools
+    \item Can't partially limit read access at all
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Obliterate
+\end{frame}
+\note[itemize]{
+    \item Completely remove something from history
+    \item This is an option you won't need often
+    \item Accidentally added very large files
+    \item Legal/security reasons
+    \item Many copies of the history
+    \item Changes are detectable
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Locks
+\end{frame}
+\note[itemize]{
+    \item No built-in way to do locks
+    \item Locks require a central server
+    \item Some git servers like gitolite support file locking
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Binaries and Very Large Repositories
+\end{frame}
+\note[itemize]{
+    \item Binaries don’t compress well, all versions stored locally
+    \item Entire repository must be cloned
+    \item Binaries don’t benefit from branching and merging
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    First Class Commits and Rewriting History
+\end{frame}
+\note[itemize]{
+    \item Commits can be manipulated
+    \item Edited, squashed, split, reordered, cherry-pick, share, signed-off
+    \item Distinction between auditing your progress and publishing a finished
+          work
+    \item Implications for review
+    \item Not a complete audit trail
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Revision Hashes Instead of Revision Numbers
+\end{frame}
+\note[itemize]{
+    \item No linear list of revision numbers
+}
+
+\begin{frame}
+    \frametitle{Pros and Cons}
+    Ease of Use
+\end{frame}
+\note[itemize]{
+    \item Git is challenging
+    \item We've been here for quite a few hours already
+}
