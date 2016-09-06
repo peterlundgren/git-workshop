@@ -504,3 +504,88 @@ EOL
 git add hello.c
 git commit -m 'Hello Class'
 popd
+
+mkdir lessons/8-recovering-your-work
+pushd lessons/8-recovering-your-work
+git init
+git commit --allow-empty -m 'Initial commit'
+cat >README.md <<EOL
+Lesson 8: Recovering Your Work
+==============================
+
+In this lesson we will practice recovering work with the reflog.
+
+1.  Study the output of \`git lol\`.
+2.  Now let's pretend we want to remove the commit "Add b.txt". Use an
+    interactive rebase to remove that commit.
+4.  Verify that the commit is not reachable in your history anymore.
+5.  Now, let's pretend that we just now realized our mistake. We should have
+    removed the commit "Add c.txt" instead. Use \`git reflog\`, \`git reflog
+    master\`, \`git log -g master\`, and \`git log -g -p master\` to find the
+    last commit that \`master\` was pointing at. What are the differences
+    between these commands?
+6.  Log that commit and verify that its history contains the "Add b.txt"
+    commit.
+7.  Use \`git reset\` to make \`master\` point to the original version. Read
+    \`git help reset\` if you are not sure what to do.
+8.  Now that you are back to where you started, do the rebase again. This time
+    remove the commit "Add c.txt".
+
+When you're done, \`git lola\` should look like the following (your hashes will
+be different).
+
+    * cefcfdd (HEAD -> master) Add e.txt
+    * d5f952c Add d.txt
+    * 83fc3f5 Add b.txt
+    * 6e2a24b Add a.txt
+    * e22319a Lesson 8
+    * 23d05f9 Initial commit
+EOL
+git add README.md
+git commit -m 'Lesson 8'
+cat >a.txt <<EOL
+ AA
+A  A
+AAAA
+A  A
+A  A
+EOL
+git add a.txt
+git commit -m 'Add a.txt'
+cat >b.txt <<EOL
+BBB
+B  B
+BBB
+B  B
+BBB
+EOL
+git add b.txt
+git commit -m 'Add b.txt'
+cat >c.txt <<EOL
+ CCC
+C
+C
+C
+ CCC
+EOL
+git add c.txt
+git commit -m 'Add c.txt'
+cat >d.txt <<EOL
+DDD
+D  D
+D  D
+D  D
+DDD
+EOL
+git add d.txt
+git commit -m 'Add d.txt'
+cat >e.txt <<EOL
+EEEE
+E
+EEE
+E
+EEEE
+EOL
+git add e.txt
+git commit -m 'Add e.txt'
+popd

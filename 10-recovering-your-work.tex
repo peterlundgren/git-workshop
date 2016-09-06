@@ -1,0 +1,126 @@
+\section[Section]{Recovering Your Work}
+
+\begin{frame}
+    \frametitle{Reachability and Garbage Collection}
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- {{B, C -- D} -- H, E -- F -- G} -- I
+            };
+        \end{tikzpicture}
+        \caption{Reachability}
+    \end{figure}
+\end{frame}
+\note[itemize]{
+    \item What is reachable from H if you follow the parent pointers?
+}
+
+\begin{frame}
+    \frametitle{Reachability and Garbage Collection}
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- {{B, C -- D} -- H, {[nodes=unreachable] E -- F -- G}} --
+                {[nodes=unreachable] I}
+            };
+        \end{tikzpicture}
+        \caption{Reachable from H}
+    \end{figure}
+\end{frame}
+\note[itemize]{
+    \item Reachable from H
+}
+
+\begin{frame}
+    \frametitle{Reachability and Garbage Collection}
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- {{[nodes=unreachable] {B, C -- D} -- H}, E -- F -- G} --
+                {[nodes=unreachable] I}
+            };
+        \end{tikzpicture}
+        \caption{Reachable from G}
+    \end{figure}
+\end{frame}
+\note[itemize]{
+    \item Reachable from G
+}
+
+\begin{frame}
+    \frametitle{Reachability and Garbage Collection}
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- {{B, C -- D} -- H, E -- F -- G} -- I
+            };
+        \end{tikzpicture}
+        \caption{Reachable from I}
+    \end{figure}
+\end{frame}
+\note[itemize]{
+    \item Everything on this graph is reachable from I
+}
+
+\begin{frame}[fragile]
+    \frametitle{Reachability and Garbage Collection}
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \gitDAG[grow right sep=2em]{
+                A -- {B -- C' -- D', {[nodes=unreachable] C -- D}}
+            };
+            \gitbranch{master}{above=of B}{B}
+            \oldgitbranch{foo}{right=of D}{D}
+            \oldgitHEAD{right=of foo}{foo}
+            \gitbranch{foo}{above=of D'}{D'}
+            \gitHEAD{above=of foo}{foo}
+        \end{tikzpicture}
+        \caption{Rebase foo onto master}
+    \end{figure}
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{console}
+$ git rebase master
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item Revisiting earlier rebase example
+    \item Calling this rewriting history was a bit of a misnomer
+    \item An alternate history C' and D' are created and \texttt{HEAD} and foo
+          point to the alternate history
+    \item The old history is still there. It is no longer referenced by foo
+    \item \texttt{git log} doesn't show it
+    \item \texttt{git log -all} doesn't show it
+    \item But it's still in your database
+    \item \texttt{git show <sha1sum>} of either C or D still works
+    \item C and D won't be garbage collected for at least 30 days
+    \item We'll come back to garbage collection later
+}
+
+\begin{frame}
+    \frametitle{Recovering Your Work}
+    Made a mistake?\\
+    Need a change from several amends ago?\\
+    Messed up a rebase?\\
+    \begin{itemize}
+        \item \texttt{git reflog}
+        \item \texttt{git fsck}
+        \item \texttt{git reset}
+    \end{itemize}
+\end{frame}
+\note[itemize]{
+    \item You can (almost) always recover your work
+    \item If you've ever added a file, that snapshot is in your database
+    \item We can recover it
+}
+
+\begin{frame}
+    \frametitle{Lesson 8}
+    \alert{Lesson 8}: Recovering Your Work
+\end{frame}
+\note[itemize]{
+    \item \alert{Lesson 8}: Recovering Your Work
+}
