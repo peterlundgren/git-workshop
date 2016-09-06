@@ -334,10 +334,9 @@ Note that it shows the commit hash of color.
     git diff --staged
     git commit -m 'Add greeting submodule'
     git log -p
-    git lol
-
     make
-    ./hello
+    ./hello # Does it work?
+    git lol
 
 Now we're two commits ahead of origin/master. Push these changes:
 
@@ -365,7 +364,7 @@ Note that the subproject commit has changed.
 It is important that you push the submodules first. What happens if you don't?
 
     git push origin master
-    cd ..o
+    cd ..
     git clone --recursive remotes/hello.git hello2
     ...
     Fetched in submodule path 'color', but it did not contain
@@ -379,5 +378,20 @@ Let's fix that.
     cd ../../
     git clone --recursive remotes/hello.git hello3
     cd hello3
+    make
+    ./hello
+
+If we go back one commit, what should happen? Should print in red.
+
+    git checkout HEAD~1
+    make
+    ./hello # What gives?
+    git status
+
+Checkout did not touch the submodule. In this way, submodules are not like
+files.
+
+    git submodule update
+    git status
     make
     ./hello
