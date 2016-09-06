@@ -1,6 +1,10 @@
 git-workshop
 ============
 
+Hands-on Git Training
+
+*   [Slides](http://peterlundgren.github.io/git-workshop/presentation.pdf)
+
 
 Install LaTeX
 -------------
