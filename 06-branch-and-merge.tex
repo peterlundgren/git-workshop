@@ -227,7 +227,7 @@ $ git checkout master
     \item Checkout the branch you want to modify / merge into
     \item Switch back to the master branch
     \item Next, I want the master have the changes on the bar branch
-    \item What should happen?
+    \item \alert{Question}: What should happen?
     \item Git checks to see if master is reachable from bar. If it is, it does
           the easiest possible thing.
 }
@@ -257,7 +257,7 @@ $ git merge bar
     \item Want master took look like bar.
     \item It moves master up to the same commit that bar is at.
     \item Next, merge foo.
-    \item What should happen?
+    \item \alert{Question}: What should happen?
     \item It's going to do a non-fast-forward merge. It has to create a new
           tree. The snapshot with both master and foo doesn't exist yet.
 }
