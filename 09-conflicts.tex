@@ -38,7 +38,7 @@ no changes added to commit (use "git add" and/or
 \end{frame}
 \note[itemize]{
     \item If a merge conflicts, it will stop before creating the merge commit
-    \item Git status will remind you that you have conflicts (unmerged paths).
+    \item \texttt{git status} will remind you that you have conflicts (unmerged paths).
     \item Either abort or resolve the changes
 }
 
@@ -160,4 +160,99 @@ $ git mergetool --tool=<tool>
 \note[itemize]{
     \item ... so let's do it
     \item \alert{Lesson 6}: Merge Conflicts
+}
+
+\begin{frame}[fragile]
+    \frametitle{Rebase Conflict}
+    \small
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{console}
+$ git rebase master
+...
+CONFLICT (content): Merge conflict in hello.c
+error: Failed to merge in the changes.
+Patch failed at 0002 Print newline
+The copy of the patch that failed is found in:
+.git/rebase-apply/patch
+
+When you have resolved this problem, run
+"git rebase --continue".
+If you prefer to skip this patch, run
+"git rebase --skip" instead.
+To check out the original branch and stop rebasing, run
+"git rebase --abort".
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item Rebase applies each commit one at a time
+    \item If a rebase conflicts, it will stop before creating the commit at
+          whichever commit in the rebase conflicts
+}
+
+\begin{frame}[fragile]
+    \frametitle{Rebase Conflict}
+    \footnotesize
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{console}
+$ git status
+# rebase in progress; onto 71f26c3
+# You are currently rebasing branch 'bugfixes' on '71f26c3'.
+#   (fix conflicts and then run "git rebase --continue")
+#   (use "git rebase --skip" to skip this patch)
+#   (use "git rebase --abort" to check out the original branch)
+#
+# Unmerged paths:
+#   (use "git reset HEAD <file>..." to unstage)
+#   (use "git add <file>..." to mark resolution)
+#
+#       both modified:   hello.c
+#
+no changes added to commit (use "git add" and/or
+"git commit -a")
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item \texttt{git status} will remind you that you have a rebase in
+          progress with conflicts (unmerged paths).
+    \item Either abort, skip, or resolve the changes
+    \item The skip option is new
+    \item Skip will not attempt to apply that change as if you had ommitted it
+          with a \texttt{git rebase -i}
+}
+
+\begin{frame}
+    \frametitle{Rebase Conflicts}
+    Git stops before each conflicting commit. Either:
+    \medskip
+    \begin{enumerate}[1.]
+        \item Abort with \texttt{git rebase --abort}
+    \end{enumerate}
+    \medskip
+    or
+    \medskip
+    \begin{enumerate}[1.]
+        \item Skip one patch with \texttt{git rebase --skip}
+    \end{enumerate}
+    \medskip
+    or
+    \medskip
+    \begin{enumerate}[1.]
+        \item Resolve the conflicts
+        \item Mark files resolved with \texttt{git add <file>}
+        \item Continue the rebase with \texttt{git rebase --continue}
+    \end{enumerate}
+\end{frame}
+\note[itemize]{
+    \item Similar process as a merge conflict but with the added option to skip
+    \item Note that the command to continue is no longer \texttt{git commit}
+}
+
+\begin{frame}
+    \frametitle{Lesson 7}
+    \alert{Lesson 7}: Rebase Conflicts
+\end{frame}
+\note[itemize]{
+    \item \alert{Lesson 7}: Rebase Conflicts
+    \item After lesson:
+          How was this different than resolving the merge conflict?
+    \item You can get similar one commit at a time merge conflict resolution
+          with \texttt{git rerere}
 }
