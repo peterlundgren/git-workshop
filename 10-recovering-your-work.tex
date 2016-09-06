@@ -125,3 +125,18 @@ $ git rebase master
 \note[itemize]{
     \item \alert{Lesson 8}: Recovering Your Work
 }
+
+\begin{frame}
+    \frametitle{Reachability and Garbage Collection}
+    Garbage Collection
+\end{frame}
+\note[itemize]{
+    \item Objects that are not reachable from branches, tags, and 30 days old
+    \item Reflog expires at 90 days, but objects may be garbaged collected
+          after 30
+    \item That said, gc doesn't run very often in most use cases
+    \item gc.auto (6700) loose objects
+    \item gc.autoPackLimit (50) pack files
+    \item Garbage collection can only happen if you run a git command
+    \item All of this is configurable
+}
