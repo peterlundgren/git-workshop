@@ -256,3 +256,44 @@ no changes added to commit (use "git add" and/or
     \item You can get similar one commit at a time merge conflict resolution
           with \texttt{git rerere}
 }
+
+\begin{frame}[fragile]
+    \frametitle{Stash Conflict}
+    \small
+    \begin{minted}[bgcolor=solarized-base2!50,frame=single,framesep=3pt]{console}
+$ git stash pop
+Auto-merging hello.c
+CONFLICT (content): Merge conflict in hello.c
+$ git status
+# On branch master
+# Unmerged paths:
+#   (use "git reset HEAD <file>..." to unstage)
+#   (use "git add <file>..." to mark resolution)
+#
+#       both modified:   hello.c
+#
+no changes added to commit (use "git add" and/or
+"git commit -a")
+    \end{minted}
+\end{frame}
+\note[itemize]{
+    \item This is starting to look familiar
+}
+
+\begin{frame}
+    \frametitle{Stash Conflicts}
+    Git applies the changes with conflict markers but leaves the change on the
+    stack.
+    \medskip
+    \begin{enumerate}[1.]
+        \item Resolve the conflicts
+        \item Mark files resolved with \texttt{git add <file>} or
+              \texttt{git reset HEAD <file>}
+        \item If you don't need the stash anymore \texttt{git stash drop}
+        \item Go back to work
+    \end{enumerate}
+\end{frame}
+\note[itemize]{
+    \item Conflicting \texttt{git stash apply} is one of the difficult
+    \item Will skip a lesson for stash, you get the idea
+}
