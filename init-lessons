@@ -589,3 +589,21 @@ EOL
 git add e.txt
 git commit -m 'Add e.txt'
 popd
+
+mkdir lessons/9-remotes
+pushd lessons/9-remotes
+cat >README.md <<EOL
+Lesson 9: Remotes
+=================
+
+1.  Clone the repo with \`git clone <repo>\`.
+2.  \`cd <reponame>\`.
+3.  Create a file <yourusername>.txt and write a funny joke in it.
+4.  Add and commit your new file.
+5.  Attempt to push your changes with \`git push origin master\`. Your change
+    will be rejected if your change is non-fast-forward because someone else
+    pushed since you cloned.
+6.  If your push was rejected, \`git fetch\` and \`git rebase origin/master\`
+    and try again.
+EOL
+popd
